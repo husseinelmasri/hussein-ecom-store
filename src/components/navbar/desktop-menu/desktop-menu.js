@@ -1,7 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { isCartSelected, isStoreSelected } from 'utilities/checkroutes';
 function DesktopMenu() {
   const loc = useLocation();
+  const navigate = useNavigate();
   return (
     <>
       <Link
@@ -18,7 +19,11 @@ function DesktopMenu() {
         }`}>
         Cart
       </Link>
-      <button className="navbar_right-side_btn primary">LogIn</button>
+      <button
+        onClick={() => navigate('/authenticate')}
+        className="navbar_right-side_btn primary">
+        LogIn
+      </button>
     </>
   );
 }

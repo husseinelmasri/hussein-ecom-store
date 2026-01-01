@@ -7,6 +7,10 @@ $color-red: red;
 
 @import './components/navbar/navbar.scss';
 @import './components/product-card/product-card.scss';
+@import './styles/store.scss';
+
+@import './styles/cart.scss';
+@import './styles/authenticate.scss';
 
 * {
   box-sizing: border-box;
@@ -20,6 +24,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: $color-secondary;
 }
 a {
   text-decoration: none;
