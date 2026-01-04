@@ -1,12 +1,12 @@
-@import "./mobile-menu/mobile-menu.scss";
+@import '../navbar/mobile-menu/mobile-menu.scss';
 
 .navbar {
-  min-height: 80px;
+  min-height: 60px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   overflow: hidden;
-  background-color: $color-white;
+  background-color: white;
   padding: 20px 30px;
   align-items: center;
   border-bottom: 2px solid hsla(0, 0%, 52.2%, 0.1);
@@ -24,6 +24,7 @@
 
   &__right-side {
     display: flex;
+
     &__item {
       display: flex;
       justify-content: center;
@@ -31,22 +32,20 @@
       padding: 0 20px;
       opacity: 0.8;
       cursor: pointer;
-      &:hover {
-        opacity: 1;
-      }
+
       &--cart-count {
         padding: 0 10px 0 0;
       }
       &--selected {
-        font-weight: 600;
         opacity: 1;
+        font-weight: 600;
       }
-    }
-    &__btn {
-      margin: 0 10px;
     }
     &__icon {
       font-size: 25px;
+    }
+    &__btn {
+      margin: 0 10px;
     }
     &__cart-count {
       border-radius: 50%;

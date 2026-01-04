@@ -1,7 +1,7 @@
-import CartCard from "components/cart-card/cart-card";
-import { products } from "utils/products";
-import { useContext } from "react";
-import { MainContext } from "utils/context";
+import CartCard from 'components/cart-card/cart-card';
+import { MainContext } from 'utils/context';
+import { useContext } from 'react';
+
 function Cart() {
   const { user, loading, username, cartProducts } = useContext(MainContext);
 
@@ -9,13 +9,14 @@ function Cart() {
     if (cartProducts) {
       let totalPrice = 0;
 
-      cartProducts.forEach((product) => {
-        totalPrice += product.price;
+      cartProducts.forEach((element) => {
+        totalPrice += Number(element.price);
       });
 
       return totalPrice;
     } else return 0;
   };
+
   return loading ? (
     <div className="cart__message">Loading...</div>
   ) : !user ? (
@@ -28,15 +29,15 @@ function Cart() {
             Please add products to your cart
           </div>
         ) : (
-          cartProducts.map((product, index) => {
-            return <CartCard key={index} product={product} />;
+          cartProducts.map((product, i) => {
+            return <CartCard key={i} product={product} />;
           })
         )}
       </div>
       <div className="cart__checkout">
         <h1>Checkout</h1>
-        <h2>Username: {username}</h2>
-        <h2>Total: ${calculateTotalPrice()}</h2>
+        <h2>Username: {username} </h2>
+        <h2>Total: ${calculateTotalPrice()} </h2>
         {calculateTotalPrice() !== 0 && (
           <button className="primary">Pay</button>
         )}

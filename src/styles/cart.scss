@@ -8,6 +8,10 @@
   @media screen and (max-width: 1100px) {
     grid-template-columns: auto;
   }
+  &__products {
+    display: flex;
+    flex-direction: column;
+  }
   &__message {
     display: flex;
     justify-content: center;
@@ -18,16 +22,11 @@
 
     &--empty-cart {
       width: 100%;
-      max-width: none;
       margin: 0;
+      max-width: none;
       margin-bottom: 40px;
     }
   }
-  &__products {
-    display: flex;
-    flex-direction: column;
-  }
-
   &__checkout {
     display: flex;
     width: 100%;

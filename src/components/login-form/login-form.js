@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { signInUser, getFrontendErrorMessage } from "utils/firebaseFunctions";
+import { useState } from 'react';
+import { signInUser, getFrontendErrorMessage } from 'utils/firebaseFunctions';
+import { useNavigate } from 'react-router-dom';
 function LogInForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -11,7 +11,7 @@ function LogInForm() {
     e.preventDefault();
     const res = await signInUser(email, password);
     if (res.success) {
-      navigate("/");
+      navigate('/');
     } else {
       setError(getFrontendErrorMessage(res.error));
     }
@@ -50,7 +50,7 @@ function LogInForm() {
       </div>
       {error && (
         <div className="form__group">
-          <div className="form__error">{error}</div>
+          <p className="form__error">{error}</p>
         </div>
       )}
       <button className="form__button primary" type="submit">

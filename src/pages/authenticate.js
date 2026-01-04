@@ -1,26 +1,26 @@
-import LogInForm from "components/login-form/login-form";
-import RegisterForm from "components/register-form/register-form";
-import { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { MainContext } from "utils/context";
+import { useState, useContext, useEffect } from 'react';
+import LogInForm from 'components/login-form/login-form';
+import RegisterForm from 'components/register-form/register-form';
+import { MainContext } from 'utils/context';
+import { useNavigate } from 'react-router-dom';
 
 function Authenticate() {
-  const [registerMode, setRegisterMode] = useState(false);
   const { user, loading } = useContext(MainContext);
+  const [registerFormToggled, setRegisterFormToggled] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    !loading && user && navigate("/");
-  }, [loading, user]);
+    !loading && user && navigate('/');
+  }, [loading]);
 
-  return registerMode ? (
+  return registerFormToggled ? (
     <div className="authenticate">
       <RegisterForm />
       <p>
-        Already have an account?{" "}
+        Already have an account?{' '}
         <b
-          onClick={() => setRegisterMode(false)}
           className="authenticate__anchor"
+          onClick={() => setRegisterFormToggled(false)}
         >
           Login
         </b>
@@ -28,12 +28,13 @@ function Authenticate() {
     </div>
   ) : (
     <div className="authenticate">
-      <LogInForm />
+      {' '}
+      <LogInForm />{' '}
       <p>
-        Don't have an account?{" "}
+        Don't have an account?{' '}
         <b
-          onClick={() => setRegisterMode(true)}
           className="authenticate__anchor"
+          onClick={() => setRegisterFormToggled(true)}
         >
           Register
         </b>

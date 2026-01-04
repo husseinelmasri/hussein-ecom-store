@@ -1,26 +1,26 @@
-import { Link } from "react-router-dom";
-import useWindowSize from "utils/useWindowSize";
-import DesktopMenu from "./desktop-menu/desktop-menu";
-import MobileMenu from "./mobile-menu/mobile-menu";
-import { useState, useEffect } from "react";
-import { AiOutlineClose } from "react-icons/ai";
-import { RxHamburgerMenu } from "react-icons/rx";
-
-function Navbar() {
+import { useState, useEffect } from 'react';
+import useWindowSize from 'utils/useWindowSize';
+import DesktopMenu from './desktop-menu/desktop-menu';
+import { Link } from 'react-router-dom';
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { AiOutlineClose } from 'react-icons/ai';
+import MobileMenu from './mobile-menu/mobile-menu';
+function NavBar() {
   const { width } = useWindowSize();
-  const [isMenuOpened, setIsOpenedMenu] = useState(false);
-  const openMenu = () => {
-    setIsOpenedMenu(true);
-  };
+  const [menuIsOpened, setMenuIsOpened] = useState(false);
   const closeMenu = () => {
-    setIsOpenedMenu(false);
+    setMenuIsOpened(false);
+  };
+  const openMenu = () => {
+    setMenuIsOpened(true);
   };
 
   useEffect(() => {
     if (width > 800) {
-      closeMenu();
+      closeMenu(false);
     }
   }, [width]);
+
   return (
     <div>
       <div className="navbar">
@@ -28,32 +28,30 @@ function Navbar() {
           <Link to="/">
             <div className="navbar__left-side__logo">
               <span className="navbar__left-side__logo__text">
-                DEVRABIC <b>ECOM</b> STORE
+                HUSSEIN <b>ECOM</b> STORE
               </span>
             </div>
           </Link>
         </div>
+
         <div className="navbar__right-side">
           {width < 800 ? (
-            isMenuOpened ? (
+            menuIsOpened ? (
               <AiOutlineClose
                 className="navbar__right-side__icon"
-                onClick={closeMenu}
-              />
+                onClick={closeMenu}></AiOutlineClose>
             ) : (
               <RxHamburgerMenu
                 className="navbar__right-side__icon"
-                onClick={openMenu}
-              />
+                onClick={openMenu}></RxHamburgerMenu>
             )
           ) : (
             <DesktopMenu />
           )}
         </div>
       </div>
-      {isMenuOpened && <MobileMenu closeFn={closeMenu} />}
+      {menuIsOpened && <MobileMenu closeFn={closeMenu} />}
     </div>
   );
 }
-
-export default Navbar;
+export default NavBar;

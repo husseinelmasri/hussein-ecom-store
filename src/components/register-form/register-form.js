@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getFrontendErrorMessage, registerUser } from "utils/firebaseFunctions";
+import { useState } from 'react';
+import { registerUser, getFrontendErrorMessage } from 'utils/firebaseFunctions';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterForm() {
   const [inputs, setInputs] = useState({
-    username: "",
-    email: "",
-    password: "",
+    username: '',
+    email: '',
+    password: '',
   });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ function RegisterForm() {
       inputs.password
     );
     if (res.success) {
-      navigate("/");
+      navigate('/');
     } else {
       setError(getFrontendErrorMessage(res.error));
     }
@@ -78,9 +78,10 @@ function RegisterForm() {
           placeholder="Enter your password"
         />
       </div>
+
       {error && (
         <div className="form__group">
-          <div className="form__error">{error}</div>
+          <p className="form__error">{error}</p>
         </div>
       )}
       <button className="form__button primary" type="submit">
