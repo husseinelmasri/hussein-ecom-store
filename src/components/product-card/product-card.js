@@ -85,7 +85,14 @@ function ProductCard({ product, onDeleteSuccess }) {
       </div>
       <button
         className="product-card__btn"
-        onClick={user ? addProduct : redirectToLogin}
+        onClick={(e) => {
+          e.preventDefault(); // ADD THIS to prevent form submission
+          if (user) {
+            addProduct();
+          } else {
+            redirectToLogin();
+          }
+        }}
         disabled={isDeleting}>
         {isDeleting ? 'Processing...' : 'Add to cart'}
       </button>

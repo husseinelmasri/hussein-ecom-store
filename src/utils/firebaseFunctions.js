@@ -104,6 +104,9 @@ export const fetchUserData = async (user) => {
 
 export const updateArrayData = async (product) => {
   const user = auth.currentUser;
+  if (!user) {
+    return { success: false, error: 'User must be logged in' };
+  }
 
   const docRef = doc(database, 'users', user.uid);
 

@@ -46,16 +46,13 @@ function App() {
     fetchProductsFromDB();
     if (!loading && user && products) {
       setupDBListener(user, (data) => {
-        const updatedProducts = products.filter((product) => {
-          return !data.some((cartProduct) => cartProduct.id === product.id);
-        });
-        setFilteredProducts(updatedProducts);
+        // JUST update cart products, don't filter store products
         setCartProducts(data);
+        // Keep all products visible in store
+        setFilteredProducts(products);
       });
-    } else {
     }
   }, [loading, user, products]);
-
   return (
     <>
       <MainContext.Provider
@@ -67,8 +64,7 @@ function App() {
           filteredProducts,
           isAdmin,
           products,
-        }}
-      >
+        }}>
         <NavBar />
         <Routes>
           <Route path="/" element={<Store />}></Route>
