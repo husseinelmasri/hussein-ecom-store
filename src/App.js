@@ -46,9 +46,8 @@ function App() {
     fetchProductsFromDB();
     if (!loading && user && products) {
       setupDBListener(user, (data) => {
-        // JUST update cart products, don't filter store products
         setCartProducts(data);
-        // Keep all products visible in store
+
         setFilteredProducts(products);
       });
     }
