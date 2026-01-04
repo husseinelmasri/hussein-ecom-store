@@ -9,10 +9,13 @@ function ProductCard({ product, onDeleteSuccess }) {
   const { user, isAdmin } = useContext(MainContext);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState(null);
+  const [showSuccess, setShowSuccess] = useState(false);
   const navigate = useNavigate();
 
   const addProduct = async () => {
     await updateArrayData(product);
+    setShowSuccess(true);
+    setTimeout(() => setShowSuccess(false), 2000);
   };
 
   const redirectToLogin = () => {
@@ -54,10 +57,10 @@ function ProductCard({ product, onDeleteSuccess }) {
         />
         <span className="product-card__content__title"> {title}</span>
         <div className="product-card__content__price">
-          ${parseFloat(price).toFixed(2)}{' '}
+          {parseFloat(price).toFixed(2)}{' '}
           {wasPrice && (
             <span className="product-card__content__price__slash">
-              ${parseFloat(wasPrice).toFixed(2)}
+              {parseFloat(wasPrice).toFixed(2)}
             </span>
           )}
         </div>
@@ -86,15 +89,19 @@ function ProductCard({ product, onDeleteSuccess }) {
       <button
         className="product-card__btn"
         onClick={(e) => {
-          e.preventDefault(); // ADD THIS to prevent form submission
+          e.preventDefault();
           if (user) {
             addProduct();
           } else {
             redirectToLogin();
           }
         }}
-        disabled={isDeleting}>
-        {isDeleting ? 'Processing...' : 'Add to cart'}
+        disabled={isDeleting || showSuccess}>
+        {showSuccess
+          ? '✓ Added!'
+          : isDeleting
+          ? 'Processing...'
+          : 'Add to cart'}
       </button>
     </div>
   );

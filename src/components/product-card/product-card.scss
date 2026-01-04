@@ -16,8 +16,6 @@
 
     &__image {
       width: 100%;
-      // height: 300px; add if images not optimized
-      // object-fit: cover;
     }
 
     &__title {
@@ -108,5 +106,25 @@
       opacity: 0.6;
       cursor: not-allowed;
     }
+  }
+
+  &__success {
+    color: #28a745;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 10px 0;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

@@ -13,8 +13,8 @@ function AddProducts() {
     wasPrice: '',
     description: '',
   });
-  const [selectedImage, setSelectedImage] = useState(null); // Store the file
-  const [imageURL, setImageURL] = useState(''); // Store the uploaded URL
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageURL, setImageURL] = useState('');
   const [error, setError] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
