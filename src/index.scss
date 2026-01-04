@@ -11,6 +11,7 @@ $color-red: red;
 
 @import './styles/cart.scss';
 @import './styles/authenticate.scss';
+@import './components/register-form/register-form.scss';
 
 * {
   box-sizing: border-box;
