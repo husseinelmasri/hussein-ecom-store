@@ -10,6 +10,10 @@ import {
   collection,
   where,
   getDocs,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  onSnapshot,
 } from "firebase/firestore";
 import { auth, database } from "./firebaseConfig";
 
@@ -47,26 +51,26 @@ export const registerUser = async (username, email, password) => {
       username: username,
       cartProducts: [],
     });
-    return { succes: true };
+    return { success: true };
   } catch (error) {
-    return { succes: false, error: error.message };
+    return { success: false, error: error.message };
   }
 };
 
 export const signInUser = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
-    return { succes: true };
+    return { success: true };
   } catch (error) {
-    return { succes: false, error: error.message };
+    return { success: false, error: error.message };
   }
 };
 export const signOutUser = async () => {
   try {
     await signOut(auth);
-    return { succes: true };
+    return { success: true };
   } catch (error) {
-    return { succes: false, error: error.message };
+    return { success: false, error: error.message };
   }
 };
 
@@ -81,8 +85,51 @@ export const fetchUserData = async (user) => {
 
     const data = doc.docs[0].data();
 
-    return { success: true, data: data };
+    return { successs: true, data: data };
   } catch (error) {
-    return { success: false, error: error.message };
+    return { successs: false, error: error.message };
   }
+};
+
+export const updateArrayData = async (product) => {
+  const user = auth.currentUser;
+
+  const docRef = doc(database, "users", user.uid);
+
+  try {
+    await updateDoc(docRef, {
+      cartProducts: arrayUnion(product),
+    });
+
+    return { successs: true };
+  } catch (error) {
+    return { successs: false, error: error.message };
+  }
+};
+
+export const removeArrayData = async (product) => {
+  const user = auth.currentUser;
+
+  const docRef = doc(database, "users", user.uid);
+
+  try {
+    await updateDoc(docRef, {
+      cartProducts: arrayRemove(product),
+    });
+
+    return { successs: true };
+  } catch (error) {
+    return { successs: false, error: error.message };
+  }
+};
+
+export const setupDBListener = (user, callback) => {
+  const docRef = doc(database, "users", user.uid);
+
+  return onSnapshot(docRef, (doc) => {
+    if (doc.exists()) {
+      const data = doc.data();
+      callback(data["cartProducts"]);
+    }
+  });
 };
