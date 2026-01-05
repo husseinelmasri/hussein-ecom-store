@@ -6,7 +6,7 @@ import Authenticate from 'pages/authenticate';
 import { Route, Routes } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { fetchUserData, fetchProducts } from 'utils/firebaseFunctions';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { MainContext } from 'utils/context';
 import { setupDBListener } from 'utils/firebaseFunctions';
 import { auth } from 'utils/firebaseConfig';
@@ -20,14 +20,15 @@ function App() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [products, setProducts] = useState([]);
 
-  const fetchProductsFromDB = async () => {
+  const fetchProductsFromDB = useCallback(async () => {
     const res1 = await fetchProducts();
     if (res1.success) {
       setProducts(res1.data);
     }
-  };
-  const fetchData = async () => {
-    fetchProductsFromDB();
+  }, []);
+
+  const fetchData = useCallback(async () => {
+    await fetchProductsFromDB();
     if (user) {
       const res2 = await fetchUserData(user);
       if (res2.success) {
@@ -36,22 +37,21 @@ function App() {
         setIsAdmin(res2.data.isAdmin);
       }
     }
-  };
+  }, [user, fetchProductsFromDB]);
 
   useEffect(() => {
     fetchData();
-  }, [user]);
+  }, [fetchData]);
 
   useEffect(() => {
-    fetchProductsFromDB();
-    if (!loading && user && products) {
+    if (!loading && user && products.length > 0) {
       setupDBListener(user, (data) => {
         setCartProducts(data);
-
         setFilteredProducts(products);
       });
     }
   }, [loading, user, products]);
+
   return (
     <>
       <MainContext.Provider

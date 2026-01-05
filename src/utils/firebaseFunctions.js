@@ -14,7 +14,6 @@ import {
   updateDoc,
   arrayUnion,
   onSnapshot,
-  addDoc,
   serverTimestamp,
   arrayRemove,
   deleteDoc,
@@ -262,7 +261,7 @@ export const deleteProduct = async (productId) => {
 
 export const promoteToAdmin = async (userId) => {
   try {
-    const { userData: currentUserData } = await checkIfAdmin();
+    await checkIfAdmin();
 
     const userDocRef = doc(database, 'users', userId);
     await updateDoc(userDocRef, {

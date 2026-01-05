@@ -10,8 +10,10 @@ function Authenticate() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    !loading && user && navigate('/');
-  }, [loading]);
+    if (!loading && user) {
+      navigate('/');
+    }
+  }, [loading, user, navigate]);
 
   return registerFormToggled ? (
     <div className="authenticate">
@@ -20,8 +22,7 @@ function Authenticate() {
         Already have an account?{' '}
         <b
           className="authenticate__anchor"
-          onClick={() => setRegisterFormToggled(false)}
-        >
+          onClick={() => setRegisterFormToggled(false)}>
           Login
         </b>
       </p>
@@ -34,8 +35,7 @@ function Authenticate() {
         Don't have an account?{' '}
         <b
           className="authenticate__anchor"
-          onClick={() => setRegisterFormToggled(true)}
-        >
+          onClick={() => setRegisterFormToggled(true)}>
           Register
         </b>
       </p>
