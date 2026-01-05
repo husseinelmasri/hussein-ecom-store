@@ -8,8 +8,10 @@ import { MainContext } from 'utils/context';
 import { useContext } from 'react';
 import { signOutUser } from 'utils/firebaseFunctions';
 import { TailSpin } from 'react-loader-spinner';
+
 const DesktopMenu = () => {
-  const { user, loading, cartProducts, isAdmin } = useContext(MainContext);
+  const { user, loading, cartProducts, isAdmin, username } =
+    useContext(MainContext);
   const loc = useLocation();
   const navigate = useNavigate();
 
@@ -19,16 +21,25 @@ const DesktopMenu = () => {
       window.location.reload();
     }
   };
+
   return (
     <>
+      {user && username && (
+        <div className="navbar__right-side__user-info">
+          <div className="navbar__user-avatar">
+            {username.charAt(0).toUpperCase()}
+          </div>
+          <span className="navbar__username">{username}</span>
+        </div>
+      )}
+
       <Link
         to="/"
-        className={` navbar__right-side__item ${
+        className={`navbar__right-side__item ${
           isStoreSelected(loc.pathname)
             ? 'navbar__right-side__item--selected'
             : ''
-        }`}
-      >
+        }`}>
         <p>Store</p>
       </Link>
 
@@ -39,8 +50,7 @@ const DesktopMenu = () => {
             isCartSelected(loc.pathname)
               ? 'navbar__right-side__item--selected'
               : ''
-          }`}
-        >
+          }`}>
           <p>Cart</p>
         </Link>
         {user && cartProducts && (
@@ -53,12 +63,11 @@ const DesktopMenu = () => {
       {user && isAdmin && (
         <Link
           to="/add-products"
-          className={` navbar__right-side__item ${
+          className={`navbar__right-side__item ${
             isAddProductsSelected(loc.pathname)
               ? 'navbar__right-side__item--selected'
               : ''
-          }`}
-        >
+          }`}>
           <p>Add Products</p>
         </Link>
       )}
@@ -88,4 +97,5 @@ const DesktopMenu = () => {
     </>
   );
 };
+
 export default DesktopMenu;

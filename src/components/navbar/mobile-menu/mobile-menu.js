@@ -9,7 +9,7 @@ import { MainContext } from 'utils/context';
 import { useContext } from 'react';
 
 const MobileMenu = ({ closeFn }) => {
-  const { user, cartProducts, isAdmin } = useContext(MainContext);
+  const { user, cartProducts, isAdmin, username } = useContext(MainContext);
 
   const loc = useLocation();
   const navigate = useNavigate();
@@ -19,30 +19,42 @@ const MobileMenu = ({ closeFn }) => {
       window.location.reload();
     }
   };
+
   return (
     <div className="mobile-menu">
       <div className="mobile-menu__content">
+        {user && username && (
+          <div className="mobile-menu__user-info">
+            <div className="mobile-menu__user-avatar">
+              {username.charAt(0).toUpperCase()}
+            </div>
+            <div className="mobile-menu__user-details">
+              <p className="mobile-menu__user-welcome">Welcome back</p>
+              <p className="mobile-menu__username">{username}</p>
+            </div>
+          </div>
+        )}
+
         <Link
           to="/"
           onClick={closeFn}
-          className={` mobile-menu__content__item ${
+          className={`mobile-menu__content__item ${
             isStoreSelected(loc.pathname)
               ? 'mobile-menu__content__item--selected'
               : ''
-          }`}
-        >
+          }`}>
           <p>Store</p>
         </Link>
+
         <div className="mobile-menu__content mobile-menu__content--cart">
           <Link
             to="/cart"
             onClick={closeFn}
-            className={` mobile-menu__content__item ${
+            className={`mobile-menu__content__item ${
               isCartSelected(loc.pathname)
                 ? 'mobile-menu__content__item--selected'
                 : ''
-            }`}
-          >
+            }`}>
             <p>Cart</p>
           </Link>
           {user && cartProducts && (
@@ -51,16 +63,16 @@ const MobileMenu = ({ closeFn }) => {
             </div>
           )}
         </div>
+
         {user && isAdmin && (
           <Link
             to="/add-products"
             onClick={closeFn}
-            className={` mobile-menu__content__item ${
+            className={`mobile-menu__content__item ${
               isAddProductsSelected(loc.pathname)
                 ? 'mobile-menu__content__item--selected'
                 : ''
-            }`}
-          >
+            }`}>
             <p>Add Products</p>
           </Link>
         )}
@@ -75,8 +87,7 @@ const MobileMenu = ({ closeFn }) => {
               navigate('/authenticate');
               closeFn();
             }}
-            className="primary"
-          >
+            className="primary">
             Login
           </button>
         )}
@@ -84,4 +95,5 @@ const MobileMenu = ({ closeFn }) => {
     </div>
   );
 };
+
 export default MobileMenu;
